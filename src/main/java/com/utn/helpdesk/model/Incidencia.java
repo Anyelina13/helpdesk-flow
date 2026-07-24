@@ -14,6 +14,9 @@ public class Incidencia {
         if (titulo == null || titulo.isBlank()) {
             throw new IllegalArgumentException("El titulo no puede estar vacio");
         }
+        if (descripcion == null || descripcion.length() < 10) {
+            throw new IllegalArgumentException("La descripcion debe tener al menos 10 caracteres");
+        }
         this.id = UUID.randomUUID().toString();
         this.titulo = titulo;
         this.descripcion = descripcion;
