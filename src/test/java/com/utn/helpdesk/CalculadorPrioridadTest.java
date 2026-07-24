@@ -13,4 +13,10 @@ class CalculadorPrioridadTest {
     void impactoAltoUrgenciaAltaEsCritica() {
         assertEquals(Prioridad.CRITICA, calculador.calcular(Impacto.ALTO, Urgencia.ALTA));
     }
+
+    @Test
+    void impactoAltoUrgenciaMediaOBajaEsAlta() {
+        assertEquals(Prioridad.ALTA, calculador.calcular(Impacto.ALTO, Urgencia.MEDIA));
+        assertEquals(Prioridad.ALTA, calculador.calcular(Impacto.ALTO, Urgencia.BAJA));
+    }
 }
