@@ -19,4 +19,16 @@ class CalculadorPrioridadTest {
         assertEquals(Prioridad.ALTA, calculador.calcular(Impacto.ALTO, Urgencia.MEDIA));
         assertEquals(Prioridad.ALTA, calculador.calcular(Impacto.ALTO, Urgencia.BAJA));
     }
+
+    @Test
+    void impactoMedioOBajoUrgenciaAltaEsAlta() {
+        assertEquals(Prioridad.ALTA, calculador.calcular(Impacto.MEDIO, Urgencia.ALTA));
+        assertEquals(Prioridad.ALTA, calculador.calcular(Impacto.BAJO, Urgencia.ALTA));
+    }
+
+    @Test
+    void cualquierOtraCombinacionEsNormal() {
+        assertEquals(Prioridad.NORMAL, calculador.calcular(Impacto.MEDIO, Urgencia.MEDIA));
+        assertEquals(Prioridad.NORMAL, calculador.calcular(Impacto.BAJO, Urgencia.BAJA));
+    }
 }
