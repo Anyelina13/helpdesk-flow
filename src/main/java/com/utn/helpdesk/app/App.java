@@ -1,4 +1,4 @@
-package com.utn.helpdesk;
+package com.utn.helpdesk.app;
 
 /**
  * Hello world!
