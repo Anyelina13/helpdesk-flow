@@ -26,4 +26,6 @@ public class Incidencia {
 
     public String getId() { return id; }
     public String getTitulo() { return titulo; }
+    public Impacto getImpacto() { return impacto; }
+    public Urgencia getUrgencia() { return urgencia; }
 }
