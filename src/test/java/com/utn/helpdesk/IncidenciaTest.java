@@ -28,4 +28,11 @@ class IncidenciaTest {
         assertEquals(Impacto.ALTO, i.getImpacto());
         assertEquals(Urgencia.ALTA, i.getUrgencia());
     }
+
+    @Test
+    void debeGenerarIdentificadorUnico() {
+        Incidencia i1 = new Incidencia("T1", "Descripcion valida larga", null, Impacto.BAJO, Urgencia.BAJA);
+        Incidencia i2 = new Incidencia("T2", "Descripcion valida larga", null, Impacto.BAJO, Urgencia.BAJA);
+        assertNotEquals(i1.getId(), i2.getId());
+    }
 }
