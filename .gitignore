@@ -1,3 +1,6 @@
+# Carpeta de build de Maven
+target/
+
 # Compiled class file
 *.class
 
