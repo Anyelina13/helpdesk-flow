@@ -2,8 +2,10 @@ package com.utn.helpdesk;
 
 import com.utn.helpdesk.model.Incidencia;
 import com.utn.helpdesk.model.Impacto;
+import com.utn.helpdesk.model.Prioridad;
 import com.utn.helpdesk.model.Urgencia;
 import org.junit.jupiter.api.Test;
+import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IncidenciaTest {
@@ -33,6 +35,32 @@ class IncidenciaTest {
     void categoriaQuedaCorrectamenteAsignada() {
         Incidencia i = new Incidencia("Titulo valido", "Descripcion valida larga", "Red", Impacto.ALTO, Urgencia.ALTA);
         assertEquals("Red", i.getCategoria());
+    }
+
+    @Test
+    void impactoNoPuedeSerNulo() {
+        assertThrows(IllegalArgumentException.class, () ->
+            new Incidencia("Titulo valido", "Descripcion valida larga", null, null, Urgencia.ALTA)
+        );
+    }
+
+    @Test
+    void urgenciaNoPuedeSerNula() {
+        assertThrows(IllegalArgumentException.class, () ->
+            new Incidencia("Titulo valido", "Descripcion valida larga", null, Impacto.ALTO, null)
+        );
+    }
+
+    @Test
+    void prioridadSeCalculaAutomaticamenteAlCrearLaIncidencia() {
+        Incidencia i = new Incidencia("Titulo valido", "Descripcion valida larga", null, Impacto.ALTO, Urgencia.ALTA);
+        assertEquals(Prioridad.CRITICA, i.getPrioridad());
+    }
+
+    @Test
+    void fechaCreacionSeAsignaAutomaticamente() {
+        Incidencia i = new Incidencia("Titulo valido", "Descripcion valida larga", null, Impacto.ALTO, Urgencia.ALTA);
+        assertEquals(LocalDate.now(), i.getFechaCreacion());
     }
 
     @Test
