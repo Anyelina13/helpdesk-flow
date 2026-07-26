@@ -31,4 +31,30 @@ public class GestorIncidencias {
     }
 
     public EstadoIncidencia getEstado(String id) { return incidencias.get(id).getEstado(); }
+
+    public Incidencia buscarPorId(String id) { return incidencias.get(id); }
+
+    public List<Incidencia> listarTodas() { return new ArrayList<>(incidencias.values()); }
+
+    public List<Incidencia> filtrarPorEstado(EstadoIncidencia estado) {
+        return incidencias.values().stream()
+            .filter(i -> i.getEstado() == estado)
+            .toList();
+    }
+
+    public List<Incidencia> filtrarPorPrioridad(Prioridad prioridad) {
+        return incidencias.values().stream()
+            .filter(i -> i.getPrioridad() == prioridad)
+            .toList();
+    }
+
+    public List<Incidencia> listarAbiertas() {
+        return incidencias.values().stream()
+            .filter(i -> i.getEstado() != EstadoIncidencia.FINALIZADA)
+            .toList();
+    }
+
+    public List<Incidencia> listarFinalizadas() {
+        return filtrarPorEstado(EstadoIncidencia.FINALIZADA);
+    }
 }
