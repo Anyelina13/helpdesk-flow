@@ -19,6 +19,11 @@ public class Incidencia {
 
     public Incidencia(String titulo, String descripcion, String categoria,
                        Impacto impacto, Urgencia urgencia) {
+        this(titulo, descripcion, categoria, impacto, urgencia, LocalDate.now());
+    }
+
+    public Incidencia(String titulo, String descripcion, String categoria,
+                       Impacto impacto, Urgencia urgencia, LocalDate fechaCreacion) {
         if (titulo == null || titulo.isBlank()) {
             throw new IllegalArgumentException("El titulo no puede estar vacio");
         }
@@ -38,7 +43,7 @@ public class Incidencia {
         this.impacto = impacto;
         this.urgencia = urgencia;
         this.prioridad = new CalculadorPrioridad().calcular(impacto, urgencia);
-        this.fechaCreacion = LocalDate.now();
+        this.fechaCreacion = fechaCreacion;
         this.estado = EstadoIncidencia.REGISTRADA;
     }
 
