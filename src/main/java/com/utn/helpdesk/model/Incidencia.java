@@ -1,13 +1,18 @@
 package com.utn.helpdesk.model;
 
+import com.utn.helpdesk.service.CalculadorPrioridad;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class Incidencia {
     private final String id;
     private final String titulo;
     private final String descripcion;
+    private final String categoria;
     private final Impacto impacto;
     private final Urgencia urgencia;
+    private final Prioridad prioridad;
+    private final LocalDate fechaCreacion;
 
     public Incidencia(String titulo, String descripcion, String categoria,
                        Impacto impacto, Urgencia urgencia) {
@@ -17,15 +22,27 @@ public class Incidencia {
         if (descripcion == null || descripcion.length() < 10) {
             throw new IllegalArgumentException("La descripcion debe tener al menos 10 caracteres");
         }
+        if (impacto == null) {
+            throw new IllegalArgumentException("El impacto es obligatorio");
+        }
+        if (urgencia == null) {
+            throw new IllegalArgumentException("La urgencia es obligatoria");
+        }
         this.id = UUID.randomUUID().toString();
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.categoria = categoria;
         this.impacto = impacto;
         this.urgencia = urgencia;
+        this.prioridad = new CalculadorPrioridad().calcular(impacto, urgencia);
+        this.fechaCreacion = LocalDate.now();
     }
 
     public String getId() { return id; }
     public String getTitulo() { return titulo; }
+    public String getCategoria() { return categoria; }
     public Impacto getImpacto() { return impacto; }
     public Urgencia getUrgencia() { return urgencia; }
+    public Prioridad getPrioridad() { return prioridad; }
+    public LocalDate getFechaCreacion() { return fechaCreacion; }
 }
