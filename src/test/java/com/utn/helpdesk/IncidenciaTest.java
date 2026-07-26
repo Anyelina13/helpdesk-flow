@@ -30,6 +30,12 @@ class IncidenciaTest {
     }
 
     @Test
+    void categoriaQuedaCorrectamenteAsignada() {
+        Incidencia i = new Incidencia("Titulo valido", "Descripcion valida larga", "Red", Impacto.ALTO, Urgencia.ALTA);
+        assertEquals("Red", i.getCategoria());
+    }
+
+    @Test
     void debeGenerarIdentificadorUnico() {
         Incidencia i1 = new Incidencia("T1", "Descripcion valida larga", null, Impacto.BAJO, Urgencia.BAJA);
         Incidencia i2 = new Incidencia("T2", "Descripcion valida larga", null, Impacto.BAJO, Urgencia.BAJA);
