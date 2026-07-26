@@ -1,5 +1,6 @@
 package com.utn.helpdesk;
 
+import com.utn.helpdesk.model.EstadoIncidencia;
 import com.utn.helpdesk.model.Incidencia;
 import com.utn.helpdesk.model.Impacto;
 import com.utn.helpdesk.model.Prioridad;
@@ -61,6 +62,12 @@ class IncidenciaTest {
     void fechaCreacionSeAsignaAutomaticamente() {
         Incidencia i = new Incidencia("Titulo valido", "Descripcion valida larga", null, Impacto.ALTO, Urgencia.ALTA);
         assertEquals(LocalDate.now(), i.getFechaCreacion());
+    }
+
+    @Test
+    void incidenciaComienzaEnEstadoRegistrada() {
+        Incidencia i = new Incidencia("Titulo valido", "Descripcion valida larga", null, Impacto.ALTO, Urgencia.ALTA);
+        assertEquals(EstadoIncidencia.REGISTRADA, i.getEstado());
     }
 
     @Test

@@ -13,6 +13,9 @@ public class Incidencia {
     private final Urgencia urgencia;
     private final Prioridad prioridad;
     private final LocalDate fechaCreacion;
+    private EstadoIncidencia estado;
+    private String solucion;
+    private LocalDate fechaCierre;
 
     public Incidencia(String titulo, String descripcion, String categoria,
                        Impacto impacto, Urgencia urgencia) {
@@ -36,6 +39,7 @@ public class Incidencia {
         this.urgencia = urgencia;
         this.prioridad = new CalculadorPrioridad().calcular(impacto, urgencia);
         this.fechaCreacion = LocalDate.now();
+        this.estado = EstadoIncidencia.REGISTRADA;
     }
 
     public String getId() { return id; }
@@ -45,4 +49,18 @@ public class Incidencia {
     public Urgencia getUrgencia() { return urgencia; }
     public Prioridad getPrioridad() { return prioridad; }
     public LocalDate getFechaCreacion() { return fechaCreacion; }
+    public EstadoIncidencia getEstado() { return estado; }
+    public String getSolucion() { return solucion; }
+    public LocalDate getFechaCierre() { return fechaCierre; }
+
+    public void setEstado(EstadoIncidencia nuevoEstado) {
+        this.estado = nuevoEstado;
+        if (nuevoEstado == EstadoIncidencia.FINALIZADA) {
+            this.fechaCierre = LocalDate.now();
+        }
+    }
+
+    public void registrarSolucion(String descripcionSolucion) {
+        this.solucion = descripcionSolucion;
+    }
 }
