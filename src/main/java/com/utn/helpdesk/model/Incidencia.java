@@ -16,6 +16,7 @@ public class Incidencia {
     private EstadoIncidencia estado;
     private String solucion;
     private LocalDate fechaCierre;
+    private boolean expedite = false;
 
     public Incidencia(String titulo, String descripcion, String categoria,
                        Impacto impacto, Urgencia urgencia) {
@@ -67,5 +68,11 @@ public class Incidencia {
 
     public void registrarSolucion(String descripcionSolucion) {
         this.solucion = descripcionSolucion;
+    }
+
+    public boolean isExpedite() { return expedite; }
+
+    public void marcarExpedite() {
+        this.expedite = true;
     }
 }
