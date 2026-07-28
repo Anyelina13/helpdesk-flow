@@ -78,7 +78,7 @@ class GestorIncidenciasTest {
     @Test
     void filtrarPorEstadoDevuelveSoloLasQueCoinciden() {
         GestorIncidencias gestor = new GestorIncidencias();
-        Incidencia registrada = gestor.registrar("Titulo 1", "Descripcion valida larga", null, Impacto.ALTO, Urgencia.ALTA);
+        gestor.registrar("Titulo 1", "Descripcion valida larga", null, Impacto.ALTO, Urgencia.ALTA);
         Incidencia enLista = gestor.registrar("Titulo 2", "Descripcion valida larga", null, Impacto.BAJO, Urgencia.BAJA);
         gestor.cambiarEstado(enLista.getId(), EstadoIncidencia.LISTA);
 

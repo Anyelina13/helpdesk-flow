@@ -51,7 +51,6 @@ class MetricasIncidenciasTest {
 
     @Test
     void leadTimePromedioSeCalculaConLaDiferenciaEntreCreacionYCierre() {
-        GestorIncidencias gestor = new GestorIncidencias();
         Incidencia antigua = new Incidencia("Titulo 1", "Descripcion valida larga", null,
             Impacto.ALTO, Urgencia.ALTA, LocalDate.now().minusDays(5));
         Incidencia reciente = new Incidencia("Titulo 2", "Descripcion valida larga", null,
