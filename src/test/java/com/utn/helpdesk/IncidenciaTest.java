@@ -71,6 +71,26 @@ class IncidenciaTest {
     }
 
     @Test
+    void reconstruirRecreaUnaIncidenciaConTodosSusDatosGuardados() {
+        LocalDate creacion = LocalDate.now().minusDays(3);
+        LocalDate cierre = LocalDate.now();
+
+        Incidencia i = Incidencia.reconstruir("id-existente", "Titulo", "Descripcion valida larga",
+            "Red", Impacto.ALTO, Urgencia.ALTA, creacion, EstadoIncidencia.FINALIZADA,
+            "Se reinicio el servicio", cierre, true);
+
+        assertEquals("id-existente", i.getId());
+        assertEquals("Titulo", i.getTitulo());
+        assertEquals("Red", i.getCategoria());
+        assertEquals(Prioridad.CRITICA, i.getPrioridad());
+        assertEquals(creacion, i.getFechaCreacion());
+        assertEquals(EstadoIncidencia.FINALIZADA, i.getEstado());
+        assertEquals("Se reinicio el servicio", i.getSolucion());
+        assertEquals(cierre, i.getFechaCierre());
+        assertTrue(i.isExpedite());
+    }
+
+    @Test
     void debeGenerarIdentificadorUnico() {
         Incidencia i1 = new Incidencia("T1", "Descripcion valida larga", null, Impacto.BAJO, Urgencia.BAJA);
         Incidencia i2 = new Incidencia("T2", "Descripcion valida larga", null, Impacto.BAJO, Urgencia.BAJA);

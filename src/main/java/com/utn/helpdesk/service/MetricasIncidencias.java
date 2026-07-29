@@ -27,6 +27,7 @@ public class MetricasIncidencias {
             .count();
     }
 
+    // Cuenta cuantas incidencias se cerraron dentro de un rango de fechas
     public long throughput(List<Incidencia> incidencias, LocalDate desde, LocalDate hasta) {
         return incidencias.stream()
             .filter(i -> i.getEstado() == EstadoIncidencia.FINALIZADA)
@@ -34,6 +35,7 @@ public class MetricasIncidencias {
             .count();
     }
 
+    // Calcula cuantos dias en promedio pasan entre crear y cerrar una incidencia
     public double leadTimePromedioEnDias(List<Incidencia> incidencias) {
         List<Incidencia> finalizadas = incidencias.stream()
             .filter(i -> i.getEstado() == EstadoIncidencia.FINALIZADA)

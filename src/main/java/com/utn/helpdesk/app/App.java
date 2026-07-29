@@ -3,23 +3,32 @@ package com.utn.helpdesk.app;
 import com.utn.helpdesk.model.*;
 import com.utn.helpdesk.service.GestorIncidencias;
 import com.utn.helpdesk.service.MetricasIncidencias;
+import com.utn.helpdesk.service.RepositorioIncidenciasTexto;
 import com.utn.helpdesk.service.ServicioExpedite;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
 public class App {
 
+    private static final Path ARCHIVO_DATOS = Path.of("incidencias.txt");
+
     private final Scanner scanner = new Scanner(System.in);
     private final GestorIncidencias gestor = new GestorIncidencias();
     private final ServicioExpedite servicioExpedite = new ServicioExpedite(gestor);
     private final MetricasIncidencias metricas = new MetricasIncidencias();
+    private final RepositorioIncidenciasTexto repositorio = new RepositorioIncidenciasTexto(ARCHIVO_DATOS);
 
     public static void main(String[] args) {
         new App().ejecutar();
     }
 
+    // Punto de partida del programa, muestra el menu una y otra vez hasta que se elija salir
     private void ejecutar() {
+        // Al empezar se cargan las incidencias que quedaron guardadas de la vez anterior
+        repositorio.cargar().forEach(gestor::agregar);
+
         boolean continuar = true;
         while (continuar) {
             mostrarMenu();
@@ -82,6 +91,7 @@ public class App {
             Urgencia urgencia = leerEnum("Urgencia", Urgencia.values());
 
             Incidencia incidencia = gestor.registrar(titulo, descripcion, categoria, impacto, urgencia);
+            guardar();
             System.out.println("Incidencia registrada con ID: " + incidencia.getId());
             System.out.println("Prioridad calculada: " + incidencia.getPrioridad());
         } catch (IllegalArgumentException e) {
@@ -99,6 +109,7 @@ public class App {
             } else {
                 gestor.cambiarEstado(incidencia.getId(), nuevoEstado);
             }
+            guardar();
             System.out.println("Estado actualizado a " + nuevoEstado);
         } catch (IllegalStateException e) {
             System.out.println("No se pudo cambiar el estado: " + e.getMessage());
@@ -110,6 +121,7 @@ public class App {
         if (incidencia == null) return;
         System.out.print("Descripcion de la solucion aplicada: ");
         gestor.registrarSolucion(incidencia.getId(), scanner.nextLine());
+        guardar();
         System.out.println("Solucion registrada.");
     }
 
@@ -118,10 +130,16 @@ public class App {
         if (incidencia == null) return;
         try {
             servicioExpedite.marcarComoExpedite(incidencia.getId());
+            guardar();
             System.out.println("Incidencia marcada como EXPEDITE.");
         } catch (IllegalStateException e) {
             System.out.println("No se pudo marcar como EXPEDITE: " + e.getMessage());
         }
+    }
+
+    // Guarda en el archivo el estado actual de todas las incidencias, se llama despues de cada cambio
+    private void guardar() {
+        repositorio.guardar(gestor.listarTodas());
     }
 
     private void listarTodas() {
@@ -174,6 +192,7 @@ public class App {
             i.getId(), i.getTitulo(), i.getEstado(), i.getPrioridad(), i.isExpedite());
     }
 
+    // Pide un valor de la lista dada y no deja seguir hasta que el usuario escriba uno valido
     private <T extends Enum<T>> T leerEnum(String etiqueta, T[] valores) {
         while (true) {
             System.out.print(etiqueta + " " + List.of(valores) + ": ");
