@@ -4,6 +4,7 @@ import com.utn.helpdesk.model.EstadoIncidencia;
 import com.utn.helpdesk.model.Incidencia;
 import com.utn.helpdesk.model.Prioridad;
 
+// Esta clase agrega la regla de EXPEDITE por encima de GestorIncidencias, sin modificarlo
 public class ServicioExpedite {
     private final GestorIncidencias gestor;
 
@@ -11,6 +12,7 @@ public class ServicioExpedite {
         this.gestor = gestor;
     }
 
+    // Solo se puede marcar como EXPEDITE una incidencia con la prioridad mas alta
     public void marcarComoExpedite(String id) {
         Incidencia incidencia = gestor.buscarPorId(id);
         if (incidencia.getPrioridad() != Prioridad.CRITICA) {
@@ -19,6 +21,7 @@ public class ServicioExpedite {
         incidencia.marcarExpedite();
     }
 
+    // Antes de cambiar el estado revisa que no haya otra incidencia EXPEDITE activa al mismo tiempo
     public void cambiarEstadoExpedite(String id, EstadoIncidencia nuevoEstado) {
         Incidencia incidencia = gestor.buscarPorId(id);
         boolean entraAFlujoActivo = nuevoEstado == EstadoIncidencia.EN_DESARROLLO

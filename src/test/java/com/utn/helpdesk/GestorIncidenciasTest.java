@@ -101,4 +101,17 @@ class GestorIncidenciasTest {
         assertEquals(List.of(finalizada), gestor.listarFinalizadas());
         assertTrue(gestor.listarAbiertas().contains(abierta));
     }
+
+    @Test
+    void agregarInsertaUnaIncidenciaReconstruidaParaQueQuedeConsultable() {
+        GestorIncidencias gestor = new GestorIncidencias();
+        Incidencia reconstruida = Incidencia.reconstruir("id-guardado", "Titulo", "Descripcion valida larga",
+            null, Impacto.ALTO, Urgencia.ALTA, java.time.LocalDate.now(), EstadoIncidencia.LISTA,
+            null, null, false);
+
+        gestor.agregar(reconstruida);
+
+        assertEquals(reconstruida, gestor.buscarPorId("id-guardado"));
+        assertEquals(EstadoIncidencia.LISTA, gestor.getEstado("id-guardado"));
+    }
 }
