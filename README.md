@@ -1,5 +1,11 @@
 # HelpDesk Flow
 
+<!-- local-development:start -->
+## Desarrollo local
+
+Consulta [RUNNING.md](RUNNING.md) para ubicar cada componente, abrirlo en su IDE, compilarlo y conocer las comprobaciones realizadas y los requisitos pendientes.
+<!-- local-development:end -->
+
 Aplicación de consola para la gestión de incidencias de mesa de ayuda (helpdesk), desarrollada como
 trabajo práctico de Xanpan, XP, Kanban e IA. Permite registrar incidencias, calcular su prioridad
 automáticamente, gestionar su flujo de estados, consultarlas/filtrarlas, ver métricas básicas del
